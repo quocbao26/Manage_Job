@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "848783498260",
+    "firebase_url": "https://ktlthdt.firebaseio.com",
+    "project_id": "ktlthdt",
+    "storage_bucket": "ktlthdt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848783498260:android:be0f05ab4b3f337b",
+        "android_client_info": {
+          "package_name": "com.example.asus.quanlycongviec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "848783498260-jvefqtm9su59i3sromlqcafd00pa3ptk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjR7Gqudq_x6GuVWWqWJNAuvN7oZKToBo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

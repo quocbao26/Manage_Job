@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/custom_bg_item"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:weightSum="3"
+            android:orientation="vertical"
+            android:layout_weight="7"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/txtTenCV"
+                android:textSize="14sp"
+                android:layout_marginLeft="5dp"
+                android:text="tên"
+                android:textColor="#ed3761"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+            <TextView
+
+                android:id="@+id/txtNoiDungCV"
+                android:textSize="14sp"
+                android:layout_marginLeft="5dp"
+                android:text="Nội dung"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+            <TextView
+
+                android:id="@+id/txtDiaDiemCV"
+                android:textSize="14sp"
+                android:layout_marginLeft="5dp"
+                android:text="Địa điểm"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:weightSum="3"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/txtGio"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:gravity="center"
+                android:layout_marginLeft="5dp"
+                android:text="Giờ"
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+            <TextView
+                android:id="@+id/txtNgay"
+                android:textSize="14sp"
+                android:layout_marginLeft="5dp"
+                android:text="15/10/2018"
+                android:textColor="#000"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

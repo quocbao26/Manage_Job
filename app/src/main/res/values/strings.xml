@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Quản lý công việc</string>
+
+    <!--đĂng nhập-->
+    <string name="dang_nhap">Đăng nhập</string>
+    <string name="ten_dang_nhap">Tên đăng nhập</string>
+    <string name="mat_khau">Mật khẩu</string>
+    <string name="dang_ky">Đăng ký</string>
+    <string name="nho_mat_khau">Nhớ mật khẩu</string>
+
+    <!--đĂng ký-->
+    <string name="tro_lai">Trở lại</string>
+    <string name="ho_ten">Họ tên</string>
+    <string name="nhap_lai_mat_khau">Nhập lại mật khẩu</string>
+
+    <!--Đổi mật khẩu-->
+    <string name="doi_mat_khau">Đổi mật khẩu</string>
+    <string name="mat_khau_moi">Mật khẩu mới</string>
+    <string name="nhap_lai_mat_khau_moi">Nhập lại mật khẩu mới</string>
+    <string name="mat_khau_cu">Mật khẩu cũ</string>
+    <string name="xac_nhan">Xác nhận</string>
+
+    <!--Quản lý danh sách user-->
+    <string name="danh_sach_user">DANH SÁCH NGƯỜI DÙNG</string>
+
+    <!--Item-->
+    <string name="ten_cong_viec">Tên công việc</string>
+    <string name="noi_dung">Nội dung</string>
+    <string name="dia_diem">Địa điểm</string>
+    <string name="ngay">Ngày</string>
+    <string name="gio">Giờ</string>
+
+    <!--Thêm công việc-->
+    <string name="chon_ngay">Chọn ngày</string>
+    <string name="chon_gio">Chọn giờ</string>
+    <string name="them_cong_viec">Thêm CV</string>
+    <string name="muc_uu_tien">Mức ưu tiên</string>
+    <!--Việc cần làm-->
+    <string name="uu_tien">Sắp xếp</string>
+    <!--Chỉnh sửa công việc-->
+    <string name="sua">Sửa</string>
+
+
+</resources>

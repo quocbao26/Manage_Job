@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#9acef1"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:background="@drawable/custom_bg"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center"
+            android:textSize="26sp"
+            android:textColor="#0070b5"
+            android:text="@string/dang_ky"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:text="@string/ten_dang_nhap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:maxLength="64"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_edt"
+            android:id="@+id/edtID"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:text="@string/mat_khau"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.TextInputLayout
+            app:passwordToggleEnabled="true"
+            android:id="@+id/usernameWrapper"
+            android:layout_width="match_parent"
+            app:hintEnabled="true"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputEditText
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/edtPASS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:maxLength="32"
+                android:background="@drawable/custom_edt" />
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:text="@string/nhap_lai_mat_khau"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.TextInputLayout
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true"
+            app:hintEnabled="true"
+            android:id="@+id/passwordWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputEditText
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/edtPASS_XacNhan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:maxLength="32"
+                android:background="@drawable/custom_edt" />
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:text="@string/ho_ten"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:maxLength="64"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_edt"
+            android:id="@+id/edtNAME"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/custom_button_press"
+            android:text="@string/dang_ky"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_button_press"
+            android:text="@string/tro_lai"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+    </LinearLayout>
+
+</ScrollView>

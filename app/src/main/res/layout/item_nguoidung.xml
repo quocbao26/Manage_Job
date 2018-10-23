@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:background="@drawable/custom_edt"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:weightSum="2"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/txtName"
+                android:text="Tên"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#dc5800"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+            <TextView
+                android:id="@+id/txtUsername"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:text="Tên tài khoản"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:weightSum="2"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/txtCountJob"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:text="Số công việc"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
