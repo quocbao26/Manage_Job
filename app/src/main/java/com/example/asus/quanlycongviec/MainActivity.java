@@ -150,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
                         if (user.getUsername().equals(strId) && user.getPassword().equals(strPass))
                         {
                             iFlag = 1;
-
                             strKeyUser = dataUser.getKey();
                             rememberIdAndPass(strId,strPass);
                             Toast.makeText(MainActivity.this, error.LOGIN_SUCCESS, Toast.LENGTH_SHORT).show();
@@ -192,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
     // đi đến màn hình đăng ký
     private void isSignup() {
-        Intent intent = new Intent(MainActivity.this,SignUpActivity.class);
+        Intent intent = new Intent(MainActivity.this,RegisterActivity.class);
         startActivity(intent);
     }
     // gán Id cho edittext và button

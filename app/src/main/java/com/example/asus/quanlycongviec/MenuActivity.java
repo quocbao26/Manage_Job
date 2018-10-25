@@ -43,7 +43,7 @@ public class MenuActivity extends AppCompatActivity {
     public static final String TAG = MenuActivity.class.getSimpleName();
     DatabaseReference mData;
     TabHost tabHost;
-    Job job;
+
     Calendar calendar;
     Toolbar toolbar;
     TextView txtTitle;
@@ -65,7 +65,6 @@ public class MenuActivity extends AppCompatActivity {
 
 
     String strSapXep = "";
-
     int iSoNgay = 0;
 
     @Override
@@ -85,7 +84,8 @@ public class MenuActivity extends AppCompatActivity {
 
     private void getJobDone() {
         Log.e(TAG,"Load Job Done");
-        mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser).addValueEventListener(new ValueEventListener() {
+        mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 arrCVDaLam.clear();
@@ -139,7 +139,8 @@ public class MenuActivity extends AppCompatActivity {
 
     private void loadSortDeadline() {
         Log.e(TAG,"Deadline");
-        mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser).addValueEventListener(new ValueEventListener() {
+        mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 arrCVCanLam.clear();
@@ -179,7 +180,8 @@ public class MenuActivity extends AppCompatActivity {
         Log.e(TAG, "Chua sort: " + arraySoNgay.toString());  // 0 5 3
         Log.e(TAG, "Chua sort: " + arrOrder.toString());     // 0 2 3
 
-        mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser).addValueEventListener(new ValueEventListener() {
+        mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 arrCVCanLam.clear();
@@ -193,7 +195,6 @@ public class MenuActivity extends AppCompatActivity {
                             if (arrOrder.get(dem) == i) {
                                 arrCVCanLam.add(job);
                                 dem++;
-
                             }
                             i++;
                             if (dem == arrOrder.size()) break;
@@ -209,8 +210,6 @@ public class MenuActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    adapterCVCanLam.notifyDataSetChanged();
-                } else {
                     adapterCVCanLam.notifyDataSetChanged();
                 }
             }
@@ -233,8 +232,11 @@ public class MenuActivity extends AppCompatActivity {
             Date mDate2 = sdf2.parse(dateInArray);
             long timeInMillisecond1 = mDate1.getTime();
             long timeInMillisecond2 = mDate2.getTime();
-            Log.e(TAG, "Ngày nhập " + timeInMillisecond1 + " - " + "Ngày máy: " + timeInMillisecond2 +" = "+((timeInMillisecond2 - timeInMillisecond1) / (1000 * 60 * 60 * 24)));
-            iSoNgay = (int) ((timeInMillisecond2 - timeInMillisecond1) / (1000 * 60 * 60 * 24)); // 1s = 1000 millisecond, 60s, 60p, 24h
+            Log.e(TAG, "Ngày nhập " + timeInMillisecond1 + " - " +
+                    "Ngày máy: " + timeInMillisecond2 +" = "
+                    +((timeInMillisecond2 - timeInMillisecond1) / (1000 * 60 * 60 * 24)));
+            // 1s = 1000 millisecond, 60s, 60p, 24h
+            iSoNgay = (int) ((timeInMillisecond2 - timeInMillisecond1) / (1000 * 60 * 60 * 24));
             return iSoNgay;
         } catch (ParseException e) {
             e.printStackTrace();
@@ -255,8 +257,9 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void addLow(String keyUuTien, String keyThap) {
-        Query query = mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser).orderByChild(keyUuTien).equalTo(keyThap);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser)
+                .orderByChild(keyUuTien).equalTo(keyThap);
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -269,8 +272,6 @@ public class MenuActivity extends AppCompatActivity {
                             adapterCVCanLam.notifyDataSetChanged();
                         }
                     }
-                } else {
-                    adapterCVCanLam.notifyDataSetChanged();
                 }
             }
 
@@ -282,8 +283,9 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void addMedium(String keyUuTien, String keyTrungBinh) {
-        Query query = mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser).orderByChild(keyUuTien).equalTo(keyTrungBinh);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser)
+                .orderByChild(keyUuTien).equalTo(keyTrungBinh);
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -292,10 +294,11 @@ public class MenuActivity extends AppCompatActivity {
                         if (job.isTrangThai() == false) {
                             arrCVCanLam.add(job);
                             adapterCVCanLam.notifyDataSetChanged();
+                        } else
+                        {
+                            adapterCVCanLam.notifyDataSetChanged();
                         }
                     }
-                } else {
-                    adapterCVCanLam.notifyDataSetChanged();
                 }
             }
 
@@ -308,8 +311,9 @@ public class MenuActivity extends AppCompatActivity {
 
     private void addHigh(String keyUuTien, String keyCao) {
         Log.e(TAG, "addCao");
-        Query query = mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser).orderByChild(keyUuTien).equalTo(keyCao);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser)
+                .orderByChild(keyUuTien).equalTo(keyCao);
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -319,9 +323,11 @@ public class MenuActivity extends AppCompatActivity {
                             arrCVCanLam.add(job);
                             adapterCVCanLam.notifyDataSetChanged();
                         }
+                        else
+                        {
+                            adapterCVCanLam.notifyDataSetChanged();
+                        }
                     }
-                } else {
-                    adapterCVCanLam.notifyDataSetChanged();
                 }
 
             }
@@ -335,7 +341,8 @@ public class MenuActivity extends AppCompatActivity {
 
     private void loadAllJob() {
         Log.e(TAG,"AllJob");
-        mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser).addValueEventListener(new ValueEventListener() {
+        mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 arrCVCanLam.clear();
@@ -344,13 +351,10 @@ public class MenuActivity extends AppCompatActivity {
                     for (DataSnapshot valueCongViec : dataSnapshot.getChildren()) {
                         Job jobCanLam = valueCongViec.getValue(Job.class);
                         if (jobCanLam.isTrangThai() == false) {
-                            Log.e(TAG,"AllJob: "+ jobCanLam.getTenCongViec());
                             arrCVCanLam.add(jobCanLam);
                             adapterCVCanLam.notifyDataSetChanged();
                         }
                     }
-                } else {
-                    adapterCVCanLam.notifyDataSetChanged();
                 }
             }
 
@@ -371,7 +375,7 @@ public class MenuActivity extends AppCompatActivity {
         lvCVCanLam.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Job jobSua = new Job(arrCVCanLam.get(i).getId(),
+                Job jobEdit = new Job(arrCVCanLam.get(i).getId(),
                         arrCVCanLam.get(i).getTenCongViec(),
                         arrCVCanLam.get(i).getNoiDung(),
                         arrCVCanLam.get(i).getDiaDiem(),
@@ -380,19 +384,16 @@ public class MenuActivity extends AppCompatActivity {
                         arrCVCanLam.get(i).getKeyUuTien(),
                         arrCVCanLam.get(i).isTrangThai());
 
-//                        Log.e(TAG,"Giờ item: "+ congViecSua.getNgay());
-//                        Log.e(TAG,"Giờ máy: " + calendar.getTimeInMillis());
-
 
                 Intent intent = new Intent(MenuActivity.this, UpdateJobActivity.class);
-                intent.putExtra("congviec", jobSua);
+                intent.putExtra("congviec", jobEdit);
                 startActivity(intent);
             }
         });
         lvCVCanLam.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                job = new Job(arrCVCanLam.get(i).getId(),
+                final Job jobTmp = new Job(arrCVCanLam.get(i).getId(),
                         arrCVCanLam.get(i).getTenCongViec(),
                         arrCVCanLam.get(i).getNoiDung(),
                         arrCVCanLam.get(i).getDiaDiem(),
@@ -408,9 +409,9 @@ public class MenuActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int itemSelect) {
 
                         if (itemSelect == 0) {
-                            processJobComplete(job);
+                            processJobComplete(jobTmp);
                         } else if (itemSelect == 1) {
-                            deleteJob(job);
+                            deleteJob(jobTmp);
                         }
 
                     }
@@ -423,7 +424,7 @@ public class MenuActivity extends AppCompatActivity {
         lvCVDaLam.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                job = new Job(arrCVDaLam.get(i).getId(),
+                final Job jobTmp = new Job(arrCVDaLam.get(i).getId(),
                         arrCVDaLam.get(i).getTenCongViec(),
                         arrCVDaLam.get(i).getNoiDung(),
                         arrCVDaLam.get(i).getDiaDiem(),
@@ -440,9 +441,9 @@ public class MenuActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int itemSelect) {
 
                         if (itemSelect == 0) {
-                            processJobReturn(job);
+                            processJobReturn(jobTmp);
                         } else if (itemSelect == 1) {
-                            deleteJob(job);
+                            deleteJob(jobTmp);
                         }
 
                     }
@@ -465,7 +466,8 @@ public class MenuActivity extends AppCompatActivity {
                             Job jobNode = daLam.getValue(Job.class);
                             if (job.getId().equals(jobNode.getId())) {
                                 jobNode.setTrangThai(false);
-                                mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser).child(daLam.getKey())
+                                mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser)
+                                        .child(daLam.getKey())
                                         .setValue(jobNode);
                             }
                         }
@@ -487,9 +489,10 @@ public class MenuActivity extends AppCompatActivity {
                         for (DataSnapshot canLam : dataSnapshot.getChildren()) {
                             Job jobNode = canLam.getValue(Job.class);
                             if (job.getId().equals(jobNode.getId())) {
-                                jobNode.setTrangThai(true);
-                                mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser).child(canLam.getKey())
-                                        .setValue(jobNode);
+                                job.setTrangThai(true);
+                                mData.child(MainActivity.strCongViec).child(MainActivity.strKeyUser)
+                                        .child(canLam.getKey())
+                                        .setValue(job);
                             }
 
                         }

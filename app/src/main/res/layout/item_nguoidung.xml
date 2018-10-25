@@ -15,43 +15,79 @@
             android:layout_marginLeft="5dp"
             android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_weight="5"
+            android:layout_weight="6"
             android:weightSum="2"
             android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/txtName"
-                android:text="Tên"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#dc5800"
+            <LinearLayout
+                android:weightSum="10"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" />
-            <TextView
-                android:id="@+id/txtUsername"
-                android:textSize="14sp"
-                android:textColor="#000000"
-                android:text="Tên tài khoản"
+                android:layout_height="0dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:text="Tên:"
+                    android:textColor="#dc5800"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:text="Bảo"
+                    android:textColor="#dc5800"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:weightSum="10"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" />
+                android:layout_height="0dp">
+                <TextView
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:text="ID:"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/txtUsername"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:text="quocbao"
+                    android:layout_weight="9"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
         </LinearLayout>
         <LinearLayout
-            android:gravity="center_vertical"
             android:layout_marginLeft="5dp"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="0dp"
-            android:layout_weight="5"
+            android:layout_weight="4"
             android:weightSum="2"
             android:layout_height="match_parent">
             <TextView
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:text="Số công việc: "
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:gravity="center_vertical"
                 android:id="@+id/txtCountJob"
                 android:textSize="14sp"
                 android:textColor="#000000"
-                android:text="Số công việc"
+                android:text="0"
                 android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp" />
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
 

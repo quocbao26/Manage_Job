@@ -30,8 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 // Tác giả          : Ngô Hoàng Quốc Bảo
 // Email            : n14dccn067@student.ptithcm.edu.vn
 // Ngày cập nhật    : 9/10/2018
-public class SignUpActivity extends AppCompatActivity {
-    public static final String TAG = SignUpActivity.class.getSimpleName();
+public class RegisterActivity extends AppCompatActivity {
+    public static final String TAG = RegisterActivity.class.getSimpleName();
     DatabaseReference mData;
     CheckAll checkAll;
     Error error;
@@ -131,7 +131,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists())
                 {
-                    Toast.makeText(SignUpActivity.this, error.REGISTER_E002,
+                    Toast.makeText(RegisterActivity.this, error.REGISTER_E002,
                             Toast.LENGTH_SHORT).show();
                 }
                 else
@@ -142,7 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isComplete())
                             {
-                                Toast.makeText(SignUpActivity.this, error.REGISTER_SUCCESS,
+                                Toast.makeText(RegisterActivity.this, error.REGISTER_SUCCESS,
                                         Toast.LENGTH_SHORT).show();
                                 finish();
                             }
@@ -151,7 +151,7 @@ public class SignUpActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(SignUpActivity.this, error.REGISTER_E005,
+                            Toast.makeText(RegisterActivity.this, error.REGISTER_E005,
                                     Toast.LENGTH_SHORT).show();
                         }
                     });

@@ -81,13 +81,12 @@ public class UserAdapter extends BaseAdapter {
         holder.txtUsername.setText(user.getUsername());
 
         mData = FirebaseDatabase.getInstance().getReference();
-        getKeyUser(user.getUsername());
-        holder.txtCountJob.setText(count+"");
+        getKeyUser(holder.txtCountJob,user.getUsername());
 
         return view;
     }
 
-    private void getKeyUser(final String username) {
+    private void getKeyUser(final TextView txtCountJob, final String username) {
         mData.child(MainActivity.strUser).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -98,8 +97,8 @@ public class UserAdapter extends BaseAdapter {
                         User user = dataUser.getValue(User.class);
                         if (user.getUsername().equals(username))
                         {
-                            getCountJob(dataUser.getKey());
-                            Log.e("Useradapter","getKeyUser: "+count);
+
+                            getCountJob(txtCountJob, dataUser.getKey());
                         }
                     }
                 }
@@ -113,20 +112,16 @@ public class UserAdapter extends BaseAdapter {
 
     }
 
-    private void getCountJob(String key) {
-        final ArrayList<Job> countJob = new ArrayList<>();
+    private void getCountJob(final TextView txtCountJob, String key) {
 
-        mData.child(MainActivity.strCongViec).child(key).addValueEventListener(new ValueEventListener() {
+
+        mData.child(MainActivity.strCongViec).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists())
                 {
-                    for (DataSnapshot dataJob : dataSnapshot.getChildren())
-                    {
-                        Job job = dataJob.getValue(Job.class);
-                        countJob.add(job);
-                    }
-                    count = countJob.size();
+                    count = (int) dataSnapshot.getChildrenCount();
+                    txtCountJob.setText(count+"");
                 }
             }
 
@@ -135,5 +130,6 @@ public class UserAdapter extends BaseAdapter {
 
             }
         });
+
     }
 }
