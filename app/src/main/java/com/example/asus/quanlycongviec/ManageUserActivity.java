@@ -36,7 +36,7 @@ public class ManageUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quan_ly_user);
+        setContentView(R.layout.activity_manage_user);
         setControls();
         addEvents();
     }
@@ -46,7 +46,9 @@ public class ManageUserActivity extends AppCompatActivity {
         lvUser.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final User user = new User(arrUser.get(i).getUsername(),arrUser.get(i).getPassword(),arrUser.get(i).getName());
+                final User user = new User(arrUser.get(i).getUsername(),
+                        arrUser.get(i).getPassword()
+                        ,arrUser.get(i).getName());
                 AlertDialog.Builder dialogDelete = new AlertDialog.Builder(ManageUserActivity.this);
                 dialogDelete.setMessage("Bạn có muốn xóa tài khoản "+user.getUsername()+" không ?");
                 dialogDelete.setPositiveButton("Có", new DialogInterface.OnClickListener() {
@@ -78,17 +80,19 @@ public class ManageUserActivity extends AppCompatActivity {
                         User userTmp = dataUser.getValue(User.class);
                         if (user.getUsername().equals(userTmp.getUsername()))
                         {
-                            mData.child(MainActivity.strCongViec).child(dataUser.getKey()).removeValue();
+                            mData.child(MainActivity.strJob).child(dataUser.getKey()).removeValue();
                             mData.child(MainActivity.strUser).child(dataUser.getKey()).removeValue()
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Toast.makeText(ManageUserActivity.this, error.MANAGER_SUCCESS, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ManageUserActivity.this,
+                                                    error.MANAGER_SUCCESS, Toast.LENGTH_SHORT).show();
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(ManageUserActivity.this, error.MANAGER_E001, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ManageUserActivity.this,
+                                                    error.MANAGER_E001, Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -104,19 +108,19 @@ public class ManageUserActivity extends AppCompatActivity {
     }
 
     private void getUsers() {
+        arrUser.clear();
         mData.child(MainActivity.strUser).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                arrUser.clear();
                 if (dataSnapshot.exists())
                 {
                     for (DataSnapshot dataUser : dataSnapshot.getChildren())
                     {
                         User user = dataUser.getValue(User.class);
                         arrUser.add(user);
-                        adapterUser.notifyDataSetChanged();
                     }
                 }
+                adapterUser.notifyDataSetChanged();
             }
 
             @Override
@@ -132,7 +136,7 @@ public class ManageUserActivity extends AppCompatActivity {
 
         lvUser = findViewById(R.id.lvUser);
         arrUser = new ArrayList<>();
-        adapterUser = new UserAdapter(ManageUserActivity.this,R.layout.item_nguoidung,arrUser);
+        adapterUser = new UserAdapter(ManageUserActivity.this,R.layout.item_user,arrUser);
         lvUser.setAdapter(adapterUser);
     }
 
@@ -144,7 +148,7 @@ public class ManageUserActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 MainActivity.strKeyUser = "";
-                startActivity(new Intent(ManageUserActivity.this, MainActivity.class));
+                //startActivity(new Intent(ManageUserActivity.this, MainActivity.class));
                 finish();
             }
         });

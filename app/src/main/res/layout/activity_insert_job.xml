@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:background="#b2d9f4"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
@@ -8,6 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <TextView
+            android:textSize="28sp"
+            android:textColor="#1828fd"
+            android:gravity="center"
+            android:text="Thêm công việc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <LinearLayout
             android:layout_marginTop="10dp"
             android:weightSum="3"

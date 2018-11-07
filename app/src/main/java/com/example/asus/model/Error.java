@@ -1,11 +1,16 @@
 package com.example.asus.model;
 
+// Mô tả            : Class thông báo thành công, thất bại, lỗi
+// Tác giả          : Ngô Hoàng Quốc Bảo
+// Email            : n14dccn067@student.ptithcm.edu.vn
+// Ngày cập nhật    : 6/11/2018
 public final class Error {
 
     // Login
     public final static String LOGIN_E001 = "Không bỏ trống";
     public final static String LOGIN_E002 = "Chưa nhập tài khoản";
     public final static String LOGIN_E003 = "Chưa nhập mật khẩu";
+
     public final static String LOGIN_E004 = "Sai tài khoản hoặc mật khẩu";
     public final static String NOT_CONNECT_INTERNET = "Chưa kết nối mạng!!";
 
@@ -44,6 +49,10 @@ public final class Error {
     public final static String UPDATE_E002 = "Sửa công việc thất bại";
 
     public final static String UPDATE_SUCCESS = "Đã sửa công việc";
+
+    // Delete
+    public final static String DELETE_E001 = "Xóa thất bại";
+    public final static String DELETE_SUCCESS = "Đã xóa";
 
 
 

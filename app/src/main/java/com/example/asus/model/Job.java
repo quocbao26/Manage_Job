@@ -4,26 +4,26 @@ import java.io.Serializable;
 
 public class Job implements Serializable{
     private String id;
-    private String tenCongViec;
-    private String noiDung;
-    private String diaDiem;
-    private String ngay;
-    private String gio;
-    private String keyUuTien;
-    private boolean trangThai;
+    private String name;
+    private String content;
+    private String location;
+    private String date;
+    private String hour;
+    private int keyPri;
+    private boolean status;
 
     public Job() {
     }
 
-    public Job(String id, String tenCongViec, String noiDung, String diaDiem, String ngay, String gio, String keyUuTien, boolean trangThai) {
+    public Job(String id, String name, String content, String location, String date, String hour, int keyPri, boolean status) {
         this.id = id;
-        this.tenCongViec = tenCongViec;
-        this.noiDung = noiDung;
-        this.diaDiem = diaDiem;
-        this.ngay = ngay;
-        this.gio = gio;
-        this.keyUuTien = keyUuTien;
-        this.trangThai = trangThai;
+        this.name = name;
+        this.content = content;
+        this.location = location;
+        this.date = date;
+        this.hour = hour;
+        this.keyPri = keyPri;
+        this.status = status;
     }
 
     public String getId() {
@@ -34,59 +34,59 @@ public class Job implements Serializable{
         this.id = id;
     }
 
-    public String getTenCongViec() {
-        return tenCongViec;
+    public String getName() {
+        return name;
     }
 
-    public void setTenCongViec(String tenCongViec) {
-        this.tenCongViec = tenCongViec;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getNoiDung() {
-        return noiDung;
+    public String getContent() {
+        return content;
     }
 
-    public void setNoiDung(String noiDung) {
-        this.noiDung = noiDung;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getDiaDiem() {
-        return diaDiem;
+    public String getLocation() {
+        return location;
     }
 
-    public void setDiaDiem(String diaDiem) {
-        this.diaDiem = diaDiem;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getNgay() {
-        return ngay;
+    public String getDate() {
+        return date;
     }
 
-    public void setNgay(String ngay) {
-        this.ngay = ngay;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getGio() {
-        return gio;
+    public String getHour() {
+        return hour;
     }
 
-    public void setGio(String gio) {
-        this.gio = gio;
+    public void setHour(String hour) {
+        this.hour = hour;
     }
 
-    public String getKeyUuTien() {
-        return keyUuTien;
+    public int getKeyPri() {
+        return keyPri;
     }
 
-    public void setKeyUuTien(String keyUuTien) {
-        this.keyUuTien = keyUuTien;
+    public void setKeyPri(int keyPri) {
+        this.keyPri = keyPri;
     }
 
-    public boolean isTrangThai() {
-        return trangThai;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setTrangThai(boolean trangThai) {
-        this.trangThai = trangThai;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

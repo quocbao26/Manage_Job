@@ -30,59 +30,57 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 public class UpdateJobActivity extends AppCompatActivity {
-    ImageView imgNgay, imgGio;
-    Button btnSua, btnTroLai;
-    EditText edtTen_edit, edtNoiDung_edit, edtDiaDiem_edit, edtNgay_edit, edtGio_edit;
+    ImageView imgDate, imgHour;
+    Button btnUpdate, btnBack;
+    EditText edtName_Edit, edtContent_Edit, edtLocation_Edit, edtDate_Edit, edtHour_Edit;
 
     Calendar calendar;
-    SimpleDateFormat sdfNgay,sdfGio;
+    SimpleDateFormat sdfDate,sdfHour;
     CheckAll checkAll;
     Error error;
     DatabaseReference mData;
 
-    String strCongViec = "jobs";
-    String idCV = "";
-    String keyPriority = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sua_cong_viec);
+        setContentView(R.layout.activity_update_job);
         setControls();
 
         Intent intent = getIntent();  // nhận dữ liệu từ MenuActivity qua (Intent)
-        Job job = (Job) intent.getSerializableExtra("congviec");
+        Job job = (Job) intent.getSerializableExtra("job");
 
         addEvents(job);
     }
 
     private void addEvents(Job job) {
-        idCV = job.getId();
-        keyPriority = job.getKeyUuTien();
-        edtTen_edit.setText(job.getTenCongViec());
-        edtNoiDung_edit.setText(job.getNoiDung());
-        edtDiaDiem_edit.setText(job.getDiaDiem());
-        edtNgay_edit.setText(job.getNgay());
-        edtGio_edit.setText(job.getGio());
-        imgNgay.setOnClickListener(new View.OnClickListener() {
+        final String idCV = job.getId();
+        final int keyPriority = job.getKeyPri();
+        edtName_Edit.setText(job.getName());
+        edtContent_Edit.setText(job.getContent());
+        edtLocation_Edit.setText(job.getLocation());
+        edtDate_Edit.setText(job.getDate());
+        edtHour_Edit.setText(job.getHour());
+        imgDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectedDate();
             }
         });
-        imgGio.setOnClickListener(new View.OnClickListener() {
+        imgHour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectedHour();
             }
         });
-        btnSua.setOnClickListener(new View.OnClickListener() {
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                processEditJob(idCV);
+                processEditJob(idCV,keyPriority);
             }
         });
-        btnTroLai.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 back();
@@ -90,21 +88,21 @@ public class UpdateJobActivity extends AppCompatActivity {
         });
     }
 
-    private void processEditJob(String idCV) {
-        String strTen,strNoiDung,strDiaDiem,strNgay,strGio;
-        strTen = edtTen_edit.getText().toString().trim();
-        strNoiDung = edtNoiDung_edit.getText().toString().trim();
-        strDiaDiem = edtDiaDiem_edit.getText().toString().trim();
-        strNgay = edtNgay_edit.getText().toString().trim();
-        strGio = edtGio_edit.getText().toString().trim();
+    private void processEditJob(String idCV, int keyPriority) {
+        String strName,strContent,strLocation,strDate,strHour;
+        strName = edtName_Edit.getText().toString().trim();
+        strContent = edtContent_Edit.getText().toString().trim();
+        strLocation = edtLocation_Edit.getText().toString().trim();
+        strDate = edtDate_Edit.getText().toString().trim();
+        strHour = edtHour_Edit.getText().toString().trim();
         HashMap<String, String> job = new HashMap<>();
         job.put("id",idCV);
-        job.put("keyPriority",keyPriority);
-        job.put("ten",strTen);
-        job.put("noidung",strNoiDung);
-        job.put("diadiem",strDiaDiem);
-        job.put("ngay",strNgay);
-        job.put("gio",strGio);
+        job.put("keyPriority",String.valueOf(keyPriority));
+        job.put("name",strName);
+        job.put("content",strContent);
+        job.put("location",strLocation);
+        job.put("date",strDate);
+        job.put("hour",strHour);
         if (checkAll.checkEmptyJob(job))
         {
             Toast.makeText(UpdateJobActivity.this, error.UPDATE_E001, Toast.LENGTH_SHORT).show();
@@ -116,19 +114,21 @@ public class UpdateJobActivity extends AppCompatActivity {
     }
 
     private void updateJobInFirebase(HashMap job) {
-        Job congViec = new Job((String)job.get("id"),(String)job.get("ten"),
-                (String)job.get("noidung"),
-                (String)job.get("diadiem"),
-                (String)job.get("ngay"),
-                (String)job.get("gio"),
-                (String)job.get("keyPriority"),false);
-        mData.child(strCongViec).child(MainActivity.strKeyUser).child(idCV).setValue(congViec)
+        Job congViec = new Job((String)job.get("id"),(String)job.get("name"),
+                (String)job.get("content"),
+                (String)job.get("location"),
+                (String)job.get("date"),
+                (String)job.get("hour"),
+                Integer.parseInt((String) job.get("keyPriority")),false);
+        mData.child(MainActivity.strJob + "/" + MainActivity.strKeyUser + "/" + congViec.getId())
+                .setValue(congViec)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()) task.isComplete();
                 {
-                    Toast.makeText(UpdateJobActivity.this, error.UPDATE_SUCCESS, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateJobActivity.this, error.UPDATE_SUCCESS,
+                            Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
@@ -146,7 +146,7 @@ public class UpdateJobActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                 calendar.set(Calendar.HOUR_OF_DAY,i);
                 calendar.set(Calendar.MINUTE,i1);
-                edtGio_edit.setText(sdfGio.format(calendar.getTime()));
+                edtHour_Edit.setText(sdfHour.format(calendar.getTime()));
             }
         };
 
@@ -155,7 +155,7 @@ public class UpdateJobActivity extends AppCompatActivity {
                 calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE),
                 true);
-                edtGio_edit.setText(sdfGio.format(calendar.getTime()));
+                edtHour_Edit.setText(sdfHour.format(calendar.getTime()));
         timePickerDialog.show();
     }
 
@@ -166,14 +166,14 @@ public class UpdateJobActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR,i);
                 calendar.set(Calendar.MONTH,i1);
                 calendar.set(Calendar.DAY_OF_MONTH,i2);
-                edtNgay_edit.setText(sdfNgay.format(calendar.getTime()));
+                edtDate_Edit.setText(sdfDate.format(calendar.getTime()));
             }
         };
         DatePickerDialog dialog = new DatePickerDialog(UpdateJobActivity.this,callback,
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DATE));
-                edtNgay_edit.setText(sdfNgay.format(calendar.getTime()));
+                edtDate_Edit.setText(sdfDate.format(calendar.getTime()));
         dialog.show();
     }
 
@@ -199,18 +199,18 @@ public class UpdateJobActivity extends AppCompatActivity {
 
 
     private void setControls() {
-        imgNgay           = findViewById(R.id.imgNgay);
-        imgGio            = findViewById(R.id.imgGio);
-        btnSua            = findViewById(R.id.btnSua);
-        btnTroLai         = findViewById(R.id.btnTroLai);
-        edtTen_edit       = findViewById(R.id.edtTenCV_edit);
-        edtNoiDung_edit   = findViewById(R.id.edtNoiDungCV_edit);
-        edtDiaDiem_edit   = findViewById(R.id.edtDiaDiemCV_edit);
-        edtNgay_edit      = findViewById(R.id.edtNgayCV_edit);
-        edtGio_edit       = findViewById(R.id.edtGioCV_edit);
+        imgDate             = findViewById(R.id.imgNgay);
+        imgHour             = findViewById(R.id.imgGio);
+        btnUpdate           = findViewById(R.id.btnSua);
+        btnBack             = findViewById(R.id.btnTroLai);
+        edtName_Edit        = findViewById(R.id.edtTenCV_edit);
+        edtContent_Edit     = findViewById(R.id.edtNoiDungCV_edit);
+        edtLocation_Edit    = findViewById(R.id.edtDiaDiemCV_edit);
+        edtDate_Edit        = findViewById(R.id.edtNgayCV_edit);
+        edtHour_Edit       = findViewById(R.id.edtGioCV_edit);
         calendar = Calendar.getInstance();
-        sdfNgay = new SimpleDateFormat("dd/MM/yyyy");
-        sdfGio = new SimpleDateFormat("HH:mm");
+        sdfDate = new SimpleDateFormat("dd/MM/yyyy");
+        sdfHour = new SimpleDateFormat("HH:mm");
         checkAll = new CheckAll();
         mData = FirebaseDatabase.getInstance().getReference();
         error = new Error();

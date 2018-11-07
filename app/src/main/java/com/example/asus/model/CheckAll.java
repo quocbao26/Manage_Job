@@ -30,9 +30,13 @@ public class CheckAll {
         return false;
     }
 
+    // Tên hàm : checkEmptyJob
+    // Mô tả   : kiểm tra HashMap có rỗng không ?
+    // Kiểu trả về : true / false
+    // Tham số : HashMap job   (chứa thuộc tính)
     public boolean checkEmptyJob(HashMap job){
-        if (job.get("ten").equals("") && job.get("noidung").equals("") &&
-                job.get("diadiem").equals("") && job.get("ngay").equals("") && job.get("gio").equals(""))
+        if (job.get("name").equals("") && job.get("content").equals("") &&
+                job.get("location").equals("") && job.get("date").equals("") && job.get("hour").equals(""))
             return true;
         else
             return false;

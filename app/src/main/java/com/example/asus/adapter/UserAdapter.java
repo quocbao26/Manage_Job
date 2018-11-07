@@ -2,17 +2,14 @@ package com.example.asus.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.asus.model.Job;
 import com.example.asus.model.User;
 import com.example.asus.quanlycongviec.MainActivity;
-import com.example.asus.quanlycongviec.MenuActivity;
 import com.example.asus.quanlycongviec.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserAdapter extends BaseAdapter {
@@ -87,7 +83,7 @@ public class UserAdapter extends BaseAdapter {
     }
 
     private void getKeyUser(final TextView txtCountJob, final String username) {
-        mData.child(MainActivity.strUser).addValueEventListener(new ValueEventListener() {
+        mData.child(MainActivity.strUser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists())
@@ -115,7 +111,7 @@ public class UserAdapter extends BaseAdapter {
     private void getCountJob(final TextView txtCountJob, String key) {
 
 
-        mData.child(MainActivity.strCongViec).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+        mData.child(MainActivity.strJob + "/" + key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists())

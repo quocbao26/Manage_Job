@@ -12,8 +12,7 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content">
         <ImageButton
-            android:src="@drawable/add"
-            android:id="@+id/imgAdd"
+            android:id="@+id/imgJob"
             android:background="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

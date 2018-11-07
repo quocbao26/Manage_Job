@@ -42,25 +42,25 @@ public class InsertJobActivity extends AppCompatActivity {
     CheckAll checkAll;
     Error error;
 
-    Button btnChonNgay,btnChonGio,btnThem;
-    EditText edtTen_add,edtNoiDung_add,edtDiaDiem_add,edtNgay_add,edtGio_add;
-    Spinner spUuTien;
-    ArrayList<String> arrUuTien;
-    ArrayAdapter<String> adapterUuTien;
+    Button btnDate,btnHour,btnAdd;
+    EditText edtName_Add,edtContent_Add,edtLocation_Add,edtDate_Add,edtHour_Add;
+    Spinner spPriority;
+    ArrayList<String> arrPriority;
+    ArrayAdapter<String> adapterPriority;
 
     Calendar calendar;
-    SimpleDateFormat sdfNgay,sdfGio;
+    SimpleDateFormat sdfDate,sdfHour;
 
-    String strKeyUuTien = "";
-    String strTenUuTien = "";
-    String strUuTien = "priority";
-    String strCongViec = "jobs";
+    //String strKeyUuTien = "";
+    String numberPri = "";
+
+    //String strCongViec = "jobs";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_them_cong_viec);
+        setContentView(R.layout.activity_insert_job);
         setControls();
         getPriority();
         spDefault();
@@ -68,15 +68,15 @@ public class InsertJobActivity extends AppCompatActivity {
     }
 
     private void getPriority() {
-        mData.child(strUuTien).addValueEventListener(new ValueEventListener() {
+        mData.child(MainActivity.strPriority).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot valuePriority : dataSnapshot.getChildren())
                 {
-                    String uuTien = valuePriority.getValue(String.class);
-                    arrUuTien.add(uuTien);
+                    int uuTien = valuePriority.getValue(Integer.class);
+                    arrPriority.add(uuTien+"");
                 }
-                adapterUuTien.notifyDataSetChanged();
+                adapterPriority.notifyDataSetChanged();
             }
 
             @Override
@@ -87,39 +87,34 @@ public class InsertJobActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
-        btnChonNgay.setOnClickListener(new View.OnClickListener() {
+        btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectDate();
             }
         });
-        btnChonGio.setOnClickListener(new View.OnClickListener() {
+        btnHour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectHour();
             }
         });
-        btnThem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addJob();
-            }
-        });
+
     }
 
-    private void addJob() {
-        String strTen,strNoiDung,strDiaDiem,strNgay,strGio;
-        strTen = edtTen_add.getText().toString().trim();
-        strNoiDung = edtNoiDung_add.getText().toString().trim();
-        strDiaDiem = edtDiaDiem_add.getText().toString().trim();
-        strNgay = edtNgay_add.getText().toString().trim();
-        strGio = edtGio_add.getText().toString().trim();
+    private void addJob(String numberPri) {
+        String strName,strContent,strLocation,strDate,strHour;
+        strName = edtName_Add.getText().toString().trim();
+        strContent = edtContent_Add.getText().toString().trim();
+        strLocation = edtLocation_Add.getText().toString().trim();
+        strDate = edtDate_Add.getText().toString().trim();
+        strHour = edtHour_Add.getText().toString().trim();
         HashMap<String, String> job = new HashMap<>();
-        job.put("ten",strTen);
-        job.put("noidung",strNoiDung);
-        job.put("diadiem",strDiaDiem);
-        job.put("ngay",strNgay);
-        job.put("gio",strGio);
+        job.put("name",strName);
+        job.put("content",strContent);
+        job.put("location",strLocation);
+        job.put("date",strDate);
+        job.put("hour",strHour);
         if (checkAll.checkEmptyJob(job))
         {
             Toast.makeText(this, error.INSERT_E001, Toast.LENGTH_SHORT).show();
@@ -127,62 +122,52 @@ public class InsertJobActivity extends AppCompatActivity {
         }
         else
         {
-            processAddJob(job);
+            processAddJob(job, numberPri);
         }
     }
 
-    private void processAddJob(final HashMap job) {
+    private void processAddJob(final HashMap job, String numberPri) {
 
-        mData.child(strUuTien).addValueEventListener(new ValueEventListener() {
+        String id = mData.child(MainActivity.strJob).push().getKey(); // id riêng từng công việc
+        Job jobTmp = new Job(id,(String)job.get("name"),
+                (String)job.get("content"),
+                (String)job.get("location"),
+                (String)job.get("date"),
+                (String)job.get("hour"),
+                Integer.parseInt(numberPri),false);
+
+        mData.child(MainActivity.strJob + "/" + MainActivity.strKeyUser)
+                .child(id).setValue(jobTmp).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot duLieuUuTien : dataSnapshot.getChildren())
-                {
-                    String uuTien = duLieuUuTien.getValue(String.class);
-                    if (strTenUuTien.equals(uuTien))
-                    {
-                        strKeyUuTien = duLieuUuTien.getKey();
-                    }
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(InsertJobActivity.this, error.INSERT_SUCCESS,
+                            Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(InsertJobActivity.this, JobNeedActivity.class));
+                    finish();
                 }
-                String id = mData.child(strCongViec).push().getKey(); // id riêng từng công việc
-                Job jobTmp = new Job(id,(String)job.get("ten"),
-                                                (String)job.get("noidung"),
-                                                (String)job.get("diadiem"),
-                                                (String)job.get("ngay"),
-                                                (String)job.get("gio"),
-                                                strKeyUuTien,false);
-
-                mData.child(strCongViec).child(MainActivity.strKeyUser)
-                        .child(id).setValue(jobTmp).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(InsertJobActivity.this, error.INSERT_SUCCESS, Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(InsertJobActivity.this, MenuActivity.class));
-                            finish();
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(InsertJobActivity.this, error.INSERT_E002, Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
-
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(InsertJobActivity.this, error.INSERT_E002,
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
     }
     private void spDefault() {
-        spUuTien.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spPriority.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                strTenUuTien = (String) adapterView.getItemAtPosition(i);
-                Log.e("ThemCongViecActivity",strTenUuTien);
+                numberPri = (String) adapterView.getItemAtPosition(i);
+                btnAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        addJob(numberPri);
+                    }
+                });
+                Log.e("ThemCongViecActivity",numberPri+"");
             }
 
             @Override
@@ -198,7 +183,7 @@ public class InsertJobActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                 calendar.set(Calendar.HOUR_OF_DAY,i);
                 calendar.set(Calendar.MINUTE,i1);
-                edtGio_add.setText(sdfGio.format(calendar.getTime()));
+                edtHour_Add.setText(sdfHour.format(calendar.getTime()));
             }
         };
 
@@ -207,7 +192,7 @@ public class InsertJobActivity extends AppCompatActivity {
                 calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE),
                 true);
-        edtGio_add.setText(sdfGio.format(calendar.getTime()));
+        edtHour_Add.setText(sdfHour.format(calendar.getTime()));
         timePickerDialog.show();
     }
 
@@ -218,36 +203,37 @@ public class InsertJobActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR,i);
                 calendar.set(Calendar.MONTH,i1);
                 calendar.set(Calendar.DAY_OF_MONTH,i2);
-                edtNgay_add.setText(sdfNgay.format(calendar.getTime()));
+                edtDate_Add.setText(sdfDate.format(calendar.getTime()));
             }
         };
         DatePickerDialog dialog = new DatePickerDialog(InsertJobActivity.this,callback,
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DATE));
-        edtNgay_add.setText(sdfNgay.format(calendar.getTime()));
+        edtDate_Add.setText(sdfDate.format(calendar.getTime()));
         dialog.show();
     }
 
     private void setControls() {
-        btnThem = findViewById(R.id.btnThem);
-        btnChonGio = findViewById(R.id.btnChonGio_add);
-        btnChonNgay = findViewById(R.id.btnChonNgay_add);
-        edtTen_add = findViewById(R.id.edtTenCV_add);
-        edtNoiDung_add = findViewById(R.id.edtNoiDungCV_add);
-        edtDiaDiem_add = findViewById(R.id.edtDiaDiemCV_add);
-        edtGio_add = findViewById(R.id.edtGioCV_add);
-        edtNgay_add = findViewById(R.id.edtNgayCV_add);
+        btnAdd = findViewById(R.id.btnThem);
+        btnHour = findViewById(R.id.btnChonGio_add);
+        btnDate = findViewById(R.id.btnChonNgay_add);
+        edtName_Add = findViewById(R.id.edtTenCV_add);
+        edtContent_Add = findViewById(R.id.edtNoiDungCV_add);
+        edtLocation_Add = findViewById(R.id.edtDiaDiemCV_add);
+        edtHour_Add = findViewById(R.id.edtGioCV_add);
+        edtDate_Add = findViewById(R.id.edtNgayCV_add);
 
-        spUuTien = findViewById(R.id.spUuTien);
-        arrUuTien = new ArrayList<>();
-        adapterUuTien = new ArrayAdapter<>(InsertJobActivity.this,android.R.layout.simple_spinner_item,arrUuTien);
-        adapterUuTien.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spUuTien.setAdapter(adapterUuTien);
+        spPriority = findViewById(R.id.spUuTien);
+        arrPriority = new ArrayList<>();
+        adapterPriority = new ArrayAdapter<>(InsertJobActivity.this,
+                android.R.layout.simple_spinner_item,arrPriority);
+        adapterPriority.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spPriority.setAdapter(adapterPriority);
 
         calendar = Calendar.getInstance();
-        sdfNgay = new SimpleDateFormat("dd/MM/yyyy");
-        sdfGio = new SimpleDateFormat("HH:mm");
+        sdfDate = new SimpleDateFormat("dd/MM/yyyy");
+        sdfHour = new SimpleDateFormat("HH:mm");
         mData = FirebaseDatabase.getInstance().getReference();
         checkAll = new CheckAll();
         error = new Error();
@@ -260,8 +246,6 @@ public class InsertJobActivity extends AppCompatActivity {
         builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                startActivity(new Intent(InsertJobActivity.this,MenuActivity.class));
                 finish();
             }
         });

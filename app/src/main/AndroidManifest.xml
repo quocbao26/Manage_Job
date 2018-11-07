@@ -21,11 +21,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MenuActivity" />
+        <activity android:name=".JobNeedActivity" />
         <activity android:name=".InsertJobActivity" />
         <activity android:name=".UpdateJobActivity" />
         <activity android:name=".ManageUserActivity" />
-        <activity android:name=".ChangePasswordActivity"></activity>
+        <activity android:name=".ChangePasswordActivity" />
+        <activity android:name=".JobDoneActivity"></activity>
     </application>
 
 </manifest>

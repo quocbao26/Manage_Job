@@ -8,18 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.asus.model.Job;
-import com.example.asus.quanlycongviec.MenuActivity;
 import com.example.asus.quanlycongviec.R;
 
 import java.util.List;
 
 public class JobAdapter extends BaseAdapter {
 
-    MenuActivity context;
+    Context context;
     int layout;
     List<Job> jobList;
 
-    public JobAdapter(MenuActivity context, int layout, List<Job> jobList) {
+    public JobAdapter(Context context, int layout, List<Job> jobList) {
         this.context = context;
         this.layout = layout;
         this.jobList = jobList;
@@ -32,7 +31,7 @@ public class JobAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return jobList.get(i);
     }
 
     @Override
@@ -41,7 +40,7 @@ public class JobAdapter extends BaseAdapter {
     }
 
     class ViewHolder{
-        TextView txtTenCV,txtNoiDungCV,txtDiaDiemCV,txtNgay,txtGio;
+        TextView txtName,txtContent,txtLocation,txtDate,txtHour;
 
     }
 
@@ -54,11 +53,11 @@ public class JobAdapter extends BaseAdapter {
             view = inflater.inflate(layout,null);
 
             holder = new ViewHolder();
-            holder.txtTenCV = view.findViewById(R.id.txtTenCV);
-            holder.txtNoiDungCV = view.findViewById(R.id.txtNoiDungCV);
-            holder.txtDiaDiemCV = view.findViewById(R.id.txtDiaDiemCV);
-            holder.txtNgay = view.findViewById(R.id.txtNgay);
-            holder.txtGio = view.findViewById(R.id.txtGio);
+            holder.txtName = view.findViewById(R.id.txtTenCV);
+            holder.txtContent = view.findViewById(R.id.txtNoiDungCV);
+            holder.txtLocation = view.findViewById(R.id.txtDiaDiemCV);
+            holder.txtDate = view.findViewById(R.id.txtNgay);
+            holder.txtHour = view.findViewById(R.id.txtGio);
             view.setTag(holder);
         }
         else
@@ -67,11 +66,11 @@ public class JobAdapter extends BaseAdapter {
         }
 
         final Job job = jobList.get(i);
-        holder.txtTenCV.setText(job.getTenCongViec());
-        holder.txtNoiDungCV.setText(job.getNoiDung());
-        holder.txtDiaDiemCV.setText(job.getDiaDiem());
-        holder.txtNgay.setText(job.getNgay());
-        holder.txtGio.setText(job.getGio());
+        holder.txtName.setText(job.getName());
+        holder.txtContent.setText(job.getContent());
+        holder.txtLocation.setText(job.getLocation());
+        holder.txtDate.setText(job.getDate());
+        holder.txtHour.setText(job.getHour());
 
         return view;
     }
